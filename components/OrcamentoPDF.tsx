@@ -125,8 +125,8 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
           <tr>
             <th style={{ ...HEADER_CELL, width: '60px' }}>QTD</th>
             <th style={{ ...HEADER_CELL }}>ITEM</th>
-            <th style={{ ...HEADER_CELL, width: '110px' }}>VALOR UNI.</th>
-            <th style={{ ...HEADER_CELL, width: '110px' }}>TOTAL</th>
+            {/* <th style={{ ...HEADER_CELL, width: '110px' }}>VALOR UNITÁRIO</th> */}
+            {/* <th style={{ ...HEADER_CELL, width: '110px' }}>SUBTOTAL</th> */}
           </tr>
         </thead>
         <tbody>
@@ -138,8 +138,8 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
                   {item ? item.quantidade : ''}
                 </td>
                 <td style={CELL}>{item?.descricao ?? ''}</td>
-                <td style={{ ...CELL, textAlign: 'right' }}>{item ? formatBRL(item.valorUnitario) : ''}</td>
-                <td style={{ ...CELL, textAlign: 'right' }}>{sub != null ? formatBRL(sub) : ''}</td>
+                {/* <td style={{ ...CELL, textAlign: 'right' }}>{item ? formatBRL(item.valorUnitario) : ''}</td> */}
+                {/* <td style={{ ...CELL, textAlign: 'right' }}>{sub != null ? formatBRL(sub) : ''}</td> */}
               </tr>
             )
           })}
@@ -169,7 +169,7 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
             </tr>
           )}
           <tr>
-            <td style={{ ...CELL, textAlign: 'right', fontWeight: 700 }} colSpan={2}>TOTAL:</td>
+            <td style={{ ...CELL, textAlign: 'right', fontWeight: 700 }} colSpan={2}>TOTAL GERAL:</td>
             <td style={{ ...CELL, textAlign: 'right', fontWeight: 700 }}>R$ {formatBRL(total)}</td>
             <td style={CELL}></td>
           </tr>
