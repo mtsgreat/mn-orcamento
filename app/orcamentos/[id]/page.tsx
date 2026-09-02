@@ -40,6 +40,8 @@ export default function OrcamentoDetalhes() {
   const [loading, setLoading] = useState(true)
   const [numero, setNumero] = useState<number | null>(null)
   const [status, setStatus] = useState<string>('rascunho')
+  const [mostrarValorUnitario, setMostrarValorUnitario] = useState(false)
+  const [parcelas, setParcelas] = useState(1)
 
   const subtotal = itens.reduce((sum, i) => sum + i.quantidade * i.valorUnitario, 0)
   const total = subtotal - desconto + frete
@@ -59,9 +61,13 @@ export default function OrcamentoDetalhes() {
       setPrazoEntrega(orc.prazo_entrega ?? '')
       const formaRaw: string = orc.forma_pagamento ?? 'A Vista'
       const prazoMatch = formaRaw.match(/^50%\/P\/(\d+) dias$/)
+      const parcelasMatch = formaRaw.match(/^Cartão de crédito em (\d+) (?:vez|vezes), (com|sem) juros$/)
       if (prazoMatch) {
         setFormaPagamento('50% / Prazo')
         setDiasPrazo(parseInt(prazoMatch[1], 10))
+      } else if (parcelasMatch) {
+        setFormaPagamento(`Cartão de Crédito ${parcelasMatch[2] === 'com' ? 'com' : 'sem'} Juros`)
+        setParcelas(parseInt(parcelasMatch[1], 10))
       } else {
         setFormaPagamento(formaRaw)
       }
@@ -86,7 +92,11 @@ export default function OrcamentoDetalhes() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      const formaToSave = formaPagamento === '50% / Prazo' ? `50%/P/${diasPrazo} dias` : formaPagamento
+      const formaToSave = formaPagamento === '50% / Prazo'
+        ? `50%/P/${diasPrazo} dias`
+        : (formaPagamento === 'Cartão de Crédito com Juros' || formaPagamento === 'Cartão de Crédito sem Juros')
+          ? `Cartão de crédito em ${parcelas} ${parcelas === 1 ? 'vez' : 'vezes'}, ${formaPagamento === 'Cartão de Crédito com Juros' ? 'com juros' : 'sem juros'}`
+          : formaPagamento
       await createClient().from('orcamentos')
         .update({ prazo_entrega: prazoEntrega || null, forma_pagamento: formaToSave, frete, desconto, subtotal, total })
         .eq('id', id)
@@ -155,6 +165,7 @@ if (loading) {
                 prazoEntrega={prazoEntrega} onPrazoChange={setPrazoEntrega}
                 formaPagamento={formaPagamento} onFormaPagamentoChange={setFormaPagamento}
                 diasPrazo={diasPrazo} onDiasPrazoChange={setDiasPrazo}
+                parcelas={parcelas} onParcelasChange={setParcelas}
               />
               <PagamentoCard config={configPagamento} />
             </div>
@@ -162,6 +173,7 @@ if (loading) {
           <div className="col-span-12 lg:col-span-4">
             <ResumoCard subtotal={subtotal} desconto={desconto} frete={frete} total={total} numero={numero}
               saving={saving} sharing={sharing} canGenerate={!!cliente.nome.trim()}
+              mostrarValorUnitario={mostrarValorUnitario} onToggleMostrarValorUnitario={() => setMostrarValorUnitario(v => !v)}
               onSave={handleSave} onPDF={handlePDF} onShare={handleShare} onClear={() => router.push('/orcamentos/novo')} />
           </div>
         </div>
@@ -169,8 +181,15 @@ if (loading) {
 
       <div style={{ position: 'fixed', left: '-9999px', top: 0, zIndex: -1 }}>
         <OrcamentoPDF id="orcamento-pdf" cliente={cliente} itens={itens} frete={frete} desconto={desconto}
-          prazoEntrega={prazoEntrega} formaPagamento={formaPagamento === '50% / Prazo' ? `50%/P/${diasPrazo} dias` : formaPagamento}
-          subtotal={subtotal} total={total} configPagamento={configPagamento} numero={numero} />
+          prazoEntrega={prazoEntrega}
+          formaPagamento={
+            formaPagamento === '50% / Prazo'
+              ? `50%/P/${diasPrazo} dias`
+              : (formaPagamento === 'Cartão de Crédito com Juros' || formaPagamento === 'Cartão de Crédito sem Juros')
+                ? `Cartão de crédito em ${parcelas} ${parcelas === 1 ? 'vez' : 'vezes'}, ${formaPagamento === 'Cartão de Crédito com Juros' ? 'com juros' : 'sem juros'}`
+                : formaPagamento
+          }
+          subtotal={subtotal} total={total} configPagamento={configPagamento} numero={numero} mostrarValorUnitario={mostrarValorUnitario} />
       </div>
 
       <BottomNav />

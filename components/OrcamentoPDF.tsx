@@ -22,6 +22,7 @@ interface Props {
   total: number
   configPagamento: ConfigPagamento | null
   numero: number | null
+  mostrarValorUnitario?: boolean
 }
 
 const BORDER = '1px solid #e0e0e0'
@@ -32,7 +33,7 @@ const LABEL_CELL: React.CSSProperties = { ...CELL, fontWeight: 700, whiteSpace: 
 // Minimum rows shown in the items table
 const MIN_ROWS = 10
 
-export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, prazoEntrega, formaPagamento, subtotal, total, configPagamento, numero }: Props) {
+export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, prazoEntrega, formaPagamento, subtotal, total, configPagamento, numero, mostrarValorUnitario = false }: Props) {
   const numStr = ''
   const dateStr = formatDateFull()
 
@@ -125,8 +126,8 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
           <tr>
             <th style={{ ...HEADER_CELL, width: '60px' }}>QTD</th>
             <th style={{ ...HEADER_CELL }}>ITEM</th>
-            {/* <th style={{ ...HEADER_CELL, width: '110px' }}>VALOR UNITÁRIO</th> */}
-            {/* <th style={{ ...HEADER_CELL, width: '110px' }}>SUBTOTAL</th> */}
+            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px' }}>VALOR UNITÁRIO</th>}
+            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px' }}>SUBTOTAL</th>}
           </tr>
         </thead>
         <tbody>
@@ -138,8 +139,8 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
                   {item ? item.quantidade : ''}
                 </td>
                 <td style={CELL}>{item?.descricao ?? ''}</td>
-                {/* <td style={{ ...CELL, textAlign: 'right' }}>{item ? formatBRL(item.valorUnitario) : ''}</td> */}
-                {/* <td style={{ ...CELL, textAlign: 'right' }}>{sub != null ? formatBRL(sub) : ''}</td> */}
+                {mostrarValorUnitario && <td style={{ ...CELL, textAlign: 'right' }}>{item ? formatBRL(item.valorUnitario) : ''}</td>}
+                {mostrarValorUnitario && <td style={{ ...CELL, textAlign: 'right' }}>{sub != null ? formatBRL(sub) : ''}</td>}
               </tr>
             )
           })}

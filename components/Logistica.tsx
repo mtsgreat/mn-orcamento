@@ -13,6 +13,8 @@ interface Props {
   onFormaPagamentoChange: (value: string) => void
   diasPrazo: number
   onDiasPrazoChange: (value: number) => void
+  parcelas: number
+  onParcelasChange: (value: number) => void
 }
 
 const inputClass =
@@ -20,14 +22,21 @@ const inputClass =
 
 const labelClass = 'block text-label-md text-on-surface-variant uppercase tracking-wider mb-1'
 
-const formasPagamento = ['A Vista', 'PIX', 'Cartão de Crédito', 'Cartão de Débito', 'Boleto', 'Transferência', 'Parcelado', '50% / 50%', '50% / Prazo']
+const formasPagamento = ['A Vista', 'PIX', 'Cartão de Crédito com Juros', 'Cartão de Crédito sem Juros', 'Cartão de Débito', 'Boleto', 'Transferência', 'Parcelado', '50% / 50%', '50% / Prazo']
 
-export default function Logistica({ frete, onFreteChange, desconto, onDescontoChange, prazoEntrega, onPrazoChange, formaPagamento, onFormaPagamentoChange, diasPrazo, onDiasPrazoChange }: Props) {
+const isCartaoCredito = (forma: string) => forma === 'Cartão de Crédito com Juros' || forma === 'Cartão de Crédito sem Juros'
+
+export default function Logistica({ frete, onFreteChange, desconto, onDescontoChange, prazoEntrega, onPrazoChange, formaPagamento, onFormaPagamentoChange, diasPrazo, onDiasPrazoChange, parcelas, onParcelasChange }: Props) {
   const [diasInput, setDiasInput] = useState(String(diasPrazo))
+  const [parcelasInput, setParcelasInput] = useState(String(parcelas))
 
   useEffect(() => {
     setDiasInput(String(diasPrazo))
   }, [diasPrazo])
+
+  useEffect(() => {
+    setParcelasInput(String(parcelas))
+  }, [parcelas])
 
   return (
     <section className="bg-surface-container-lowest border border-outline-variant shadow-sm rounded-xl p-6">
@@ -72,6 +81,30 @@ export default function Logistica({ frete, onFreteChange, desconto, onDescontoCh
               }}
               className={inputClass}
               placeholder="Ex: 15"
+            />
+          </div>
+        )}
+
+        {isCartaoCredito(formaPagamento) && (
+          <div>
+            <label className={labelClass}>Quantidade de Parcelas</label>
+            <input
+              type="number"
+              min={1}
+              value={parcelasInput}
+              onChange={(e) => {
+                setParcelasInput(e.target.value)
+                const num = parseInt(e.target.value)
+                if (!isNaN(num) && num >= 1) onParcelasChange(num)
+              }}
+              onBlur={() => {
+                const num = parseInt(parcelasInput)
+                const valid = !isNaN(num) && num >= 1 ? num : 1
+                onParcelasChange(valid)
+                setParcelasInput(String(valid))
+              }}
+              className={inputClass}
+              placeholder="Ex: 3"
             />
           </div>
         )}

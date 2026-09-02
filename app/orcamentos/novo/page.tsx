@@ -35,10 +35,12 @@ export default function NovoOrcamento() {
   const [diasPrazo, setDiasPrazo] = useState(15)
   const [configPagamento, setConfigPagamento] = useState<ConfigPagamento | null>(null)
   const [desconto, setDesconto] = useState(0)
+  const [parcelas, setParcelas] = useState(1)
   const [saving, setSaving] = useState(false)
   const [exportando, setExportando] = useState(false)
   const [sharing, setSharing] = useState(false)
   const [numero, setNumero] = useState<number | null>(null)
+  const [mostrarValorUnitario, setMostrarValorUnitario] = useState(false)
 
   const subtotal = itens.reduce((sum, i) => sum + i.quantidade * i.valorUnitario, 0)
   const total = subtotal - desconto + frete
@@ -57,7 +59,11 @@ export default function NovoOrcamento() {
         .select('id').single()
       if (data) clienteId = data.id
     }
-    const formaToSave = formaPagamento === '50% / Prazo' ? `50%/P/${diasPrazo} dias` : formaPagamento
+    const formaToSave = formaPagamento === '50% / Prazo'
+      ? `50%/P/${diasPrazo} dias`
+      : (formaPagamento === 'Cartão de Crédito com Juros' || formaPagamento === 'Cartão de Crédito sem Juros')
+        ? `Cartão de crédito em ${parcelas} ${parcelas === 1 ? 'vez' : 'vezes'}, ${formaPagamento === 'Cartão de Crédito com Juros' ? 'com juros' : 'sem juros'}`
+        : formaPagamento
     const { data: orc } = await supabase.from('orcamentos')
       .insert({ cliente_id: clienteId, prazo_entrega: prazoEntrega || null, forma_pagamento: formaToSave, frete, desconto, subtotal, total, status: 'rascunho' })
       .select('id, numero').single()
@@ -111,6 +117,7 @@ const handleClear = () => {
     setPrazoEntrega('')
     setFormaPagamento('A Vista')
     setDiasPrazo(15)
+    setParcelas(1)
     setNumero(null)
   }
 
@@ -137,6 +144,7 @@ const handleClear = () => {
                 prazoEntrega={prazoEntrega} onPrazoChange={setPrazoEntrega}
                 formaPagamento={formaPagamento} onFormaPagamentoChange={setFormaPagamento}
                 diasPrazo={diasPrazo} onDiasPrazoChange={setDiasPrazo}
+                parcelas={parcelas} onParcelasChange={setParcelas}
               />
               <PagamentoCard config={configPagamento} />
             </div>
@@ -144,6 +152,7 @@ const handleClear = () => {
           <div className="col-span-12 lg:col-span-4">
             <ResumoCard subtotal={subtotal} desconto={desconto} frete={frete} total={total} numero={numero}
               saving={saving || exportando} sharing={sharing} canGenerate={!!cliente.nome.trim()}
+              mostrarValorUnitario={mostrarValorUnitario} onToggleMostrarValorUnitario={() => setMostrarValorUnitario(v => !v)}
               onSave={handleSave} onPDF={handlePDF} onShare={handleShare} onClear={handleClear} />
           </div>
         </div>
@@ -151,8 +160,15 @@ const handleClear = () => {
 
       <div style={{ position: 'fixed', left: '-9999px', top: 0, zIndex: -1 }}>
         <OrcamentoPDF id="orcamento-pdf" cliente={cliente} itens={itens} frete={frete} desconto={desconto}
-          prazoEntrega={prazoEntrega} formaPagamento={formaPagamento === '50% / Prazo' ? `50%/P/${diasPrazo} dias` : formaPagamento}
-          subtotal={subtotal} total={total} configPagamento={configPagamento} numero={numero} />
+          prazoEntrega={prazoEntrega}
+          formaPagamento={
+            formaPagamento === '50% / Prazo'
+              ? `50%/P/${diasPrazo} dias`
+              : (formaPagamento === 'Cartão de Crédito com Juros' || formaPagamento === 'Cartão de Crédito sem Juros')
+                ? `Cartão de crédito em ${parcelas} ${parcelas === 1 ? 'vez' : 'vezes'}, ${formaPagamento === 'Cartão de Crédito com Juros' ? 'com juros' : 'sem juros'}`
+                : formaPagamento
+          }
+          subtotal={subtotal} total={total} configPagamento={configPagamento} numero={numero} mostrarValorUnitario={mostrarValorUnitario} />
       </div>
 
       <BottomNav />

@@ -13,13 +13,15 @@ interface Props {
   saving: boolean
   sharing?: boolean
   canGenerate?: boolean
+  mostrarValorUnitario: boolean
+  onToggleMostrarValorUnitario: () => void
   onSave: () => void
   onPDF: () => void
   onShare?: () => Promise<void>
   onClear: () => void
 }
 
-export default function ResumoCard({ subtotal, desconto, frete, total, numero, saving, sharing, canGenerate = false, onSave, onPDF, onShare, onClear }: Props) {
+export default function ResumoCard({ subtotal, desconto, frete, total, numero, saving, sharing, canGenerate = false, mostrarValorUnitario, onToggleMostrarValorUnitario, onSave, onPDF, onShare, onClear }: Props) {
   return (
     <div className="sticky top-20 bg-primary text-on-primary p-8 rounded-xl shadow-lg border-b-8 border-primary-container">
       {/* Total */}
@@ -57,6 +59,22 @@ export default function ResumoCard({ subtotal, desconto, frete, total, numero, s
 
       {/* Actions */}
       <div className="space-y-3">
+        {/* Toggle valor unitário */}
+        <label className="flex items-center justify-between gap-3 cursor-pointer select-none py-2 px-3 rounded-xl bg-white/10 hover:bg-white/15 transition-colors">
+          <span className="text-body-md opacity-90">Mostrar valor unitário</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={mostrarValorUnitario}
+            onClick={onToggleMostrarValorUnitario}
+            className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none ${mostrarValorUnitario ? 'bg-on-primary' : 'bg-white/30'}`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-5 w-5 transform rounded-full shadow transition duration-200 ${mostrarValorUnitario ? 'translate-x-5 bg-primary' : 'translate-x-0 bg-white/80'}`}
+            />
+          </button>
+        </label>
+
         <button
           onClick={onPDF}
           disabled={!canGenerate}
