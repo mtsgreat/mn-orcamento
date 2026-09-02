@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MN Orçamento
 
-## Getting Started
+Aplicação web para criação e gestão de orçamentos, com exportação em PDF e compartilhamento por e-mail.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **[Next.js 16](https://nextjs.org/)** — framework React com App Router
+- **[React 19](https://react.dev/)** — interface
+- **[TypeScript 5](https://www.typescriptlang.org/)** — tipagem estática
+- **[Tailwind CSS 4](https://tailwindcss.com/)** — estilização
+- **[Supabase](https://supabase.com/)** — banco de dados PostgreSQL, autenticação e API
+- **[html2canvas](https://html2canvas.hertzen.com/) + [jsPDF](https://github.com/parallax/jsPDF)** — geração de PDF no browser
+- **[Vercel](https://vercel.com/)** — deploy e hospedagem
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Cadastro de clientes (nome, CNPJ, endereço, contato)
+- Criação de orçamentos com múltiplos itens e serviços
+- Cálculo automático de subtotal, desconto, frete e total
+- Formas de pagamento: à vista, PIX, boleto, transferência, parcelado, 50%/50%, cartão de crédito com e sem juros (com número de parcelas)
+- Prazo de entrega configurável
+- Exportação do orçamento em PDF
+- Opção de mostrar ou ocultar valor unitário no PDF
+- Compartilhamento do PDF por e-mail (Web Share API)
+- Configuração de dados bancários e chave PIX para exibição no PDF
+- Histórico de orçamentos com status (rascunho, enviado, aprovado)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Banco de dados
 
-## Learn More
+Tabelas principais no Supabase:
 
-To learn more about Next.js, take a look at the following resources:
+| Tabela | Descrição |
+|---|---|
+| `clientes` | Dados dos clientes |
+| `orcamentos` | Cabeçalho do orçamento (totais, forma de pagamento, status) |
+| `orcamento_itens` | Itens/serviços de cada orçamento |
+| `servicos` | Catálogo de serviços reutilizáveis |
+| `configuracao_pagamento` | Dados bancários e PIX exibidos no PDF |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+As migrations estão em `supabase/migrations/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuração local
 
-## Deploy on Vercel
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repo>
+   cd mn-orcamento
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Crie o arquivo `.env.local` na raiz com suas credenciais do Supabase:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_anon_key
+   ```
+
+4. Execute as migrations no painel do Supabase (SQL Editor) ou via Supabase CLI.
+
+5. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+   Acesse em [http://localhost:3000](http://localhost:3000).
+
+## Deploy
+
+O projeto está configurado para deploy na Vercel. Basta conectar o repositório e adicionar as variáveis de ambiente `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` nas configurações do projeto.
