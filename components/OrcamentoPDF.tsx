@@ -58,11 +58,18 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
         boxSizing: 'border-box',
       }}
     >
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <img
+          src="/logo.png"
+          alt=""
+          style={{ width: '400px', marginBottom: '20px' }}
+        />
+      </div>
       {/* ── TITLE ── */}
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6px' }}>
         <tbody>
           <tr>
-            <td style={{ ...HEADER_CELL, fontSize: '18px', letterSpacing: '2px', padding: '10px' }}>
+            <td style={{ ...HEADER_CELL, fontSize: '18px', letterSpacing: '2px', padding: '10px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>
               ORÇAMENTO {numStr}
             </td>
           </tr>
@@ -112,7 +119,7 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '2px' }}>
         <tbody>
           <tr>
-            <td style={{ ...HEADER_CELL, padding: '6px', letterSpacing: '1px' }}>SERVIÇO OFERECIDO</td>
+            <td style={{ ...HEADER_CELL, padding: '6px', letterSpacing: '1px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>SERVIÇO OFERECIDO</td>
           </tr>
           <tr>
             <td style={{ ...CELL, textAlign: 'center', fontWeight: 700, textDecoration: 'underline' }}>DESCRIÇÃO</td>
@@ -124,10 +131,10 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '2px' }}>
         <thead>
           <tr>
-            <th style={{ ...HEADER_CELL, width: '60px' }}>QTD</th>
-            <th style={{ ...HEADER_CELL }}>ITEM</th>
-            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px' }}>VALOR UNITÁRIO</th>}
-            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px' }}>SUBTOTAL</th>}
+            <th style={{ ...HEADER_CELL, width: '60px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>QTD</th>
+            <th style={{ ...HEADER_CELL, backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>ITEM</th>
+            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>VALOR UNITÁRIO</th>}
+            {mostrarValorUnitario && <th style={{ ...HEADER_CELL, width: '110px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>SUBTOTAL</th>}
           </tr>
         </thead>
         <tbody>
@@ -214,7 +221,7 @@ export default function OrcamentoPDF({ id, cliente, itens, frete, desconto, praz
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '2px' }}>
           <tbody>
             <tr>
-              <td style={{ ...HEADER_CELL, textAlign: 'left', padding: '6px 8px' }}>DADOS DA EMPRESA</td>
+              <td style={{ ...HEADER_CELL, textAlign: 'left', padding: '6px 8px', backgroundColor: '#b0bec5', border: '1px solid #9aa5af' }}>DADOS DA EMPRESA</td>
             </tr>
             <tr>
               <td style={{ ...CELL, border: 'none', padding: '3px 0', fontSize: '12px', lineHeight: '1.6' }}>

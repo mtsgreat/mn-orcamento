@@ -1,56 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Professional Utility Color System ── */
-  --color-primary: #00288e;
+  --color-primary: #F54927;
   --color-on-primary: #ffffff;
-  --color-primary-container: #1e40af;
-  --color-on-primary-container: #a8b8ff;
-  --color-primary-fixed: #dde1ff;
-  --color-primary-fixed-dim: #b8c4ff;
-  --color-on-primary-fixed: #001453;
-  --color-on-primary-fixed-variant: #173bab;
+  --color-primary-container: #c43a1d;
+  --color-on-primary-container: #ffffff;
+  --color-primary-fixed: #ffe5de;
+  --color-primary-fixed-dim: #ffc1b3;
+  --color-on-primary-fixed: #3a0d00;
+  --color-on-primary-fixed-variant: #8d2d18;
 
-  --color-secondary: #505f76;
+  --color-secondary: #757575;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #d0e1fb;
-  --color-on-secondary-container: #54647a;
-  --color-secondary-fixed: #d3e4fe;
-  --color-secondary-fixed-dim: #b7c8e1;
-  --color-on-secondary-fixed: #0b1c30;
-  --color-on-secondary-fixed-variant: #38485d;
+  --color-secondary-container: #333333;
+  --color-on-secondary-container: #ffffff;
+  --color-secondary-fixed: #e0e0e0;
+  --color-secondary-fixed-dim: #b5b5b5;
+  --color-on-secondary-fixed: #121212;
+  --color-on-secondary-fixed-variant: #3a3a3a;
 
-  --color-tertiary: #611e00;
+  --color-tertiary: #F54927;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #872d00;
-  --color-on-tertiary-container: #ffa583;
+  --color-tertiary-container: #c43a1d;
+  --color-on-tertiary-container: #ffffff;
 
-  --color-error: #ba1a1a;
+  --color-error: #ff4444;
   --color-on-error: #ffffff;
-  --color-error-container: #ffdad6;
-  --color-on-error-container: #93000a;
+  --color-error-container: #5c0000;
+  --color-on-error-container: #ffc8c8;
 
-  --color-background: #f7f9fb;
-  --color-on-background: #191c1e;
-  --color-surface: #f7f9fb;
-  --color-surface-dim: #d8dadc;
-  --color-surface-bright: #f7f9fb;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f2f4f6;
-  --color-surface-container: #eceef0;
-  --color-surface-container-high: #e6e8ea;
-  --color-surface-container-highest: #e0e3e5;
-  --color-on-surface: #191c1e;
-  --color-on-surface-variant: #444653;
-  --color-outline: #757684;
-  --color-outline-variant: #c4c5d5;
-  --color-surface-variant: #e0e3e5;
-  --color-inverse-surface: #2d3133;
-  --color-inverse-on-surface: #eff1f3;
-  --color-inverse-primary: #b8c4ff;
-  --color-surface-tint: #3755c3;
+  --color-background: #000000;
+  --color-on-background: #ffffff;
+  --color-surface: #0a0a0a;
+  --color-surface-dim: #141414;
+  --color-surface-bright: #121212;
+  --color-surface-container-lowest: #121212;
+  --color-surface-container-low: #0f0f0f;
+  --color-surface-container: #151515;
+  --color-surface-container-high: #1a1a1a;
+  --color-surface-container-highest: #222222;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: #c9c9c9;
+  --color-outline: #555555;
+  --color-outline-variant: #333333;
+  --color-surface-variant: #1a1a1a;
+  --color-inverse-surface: #f0f0f0;
+  --color-inverse-on-surface: #121212;
+  --color-inverse-primary: #ffc1b3;
+  --color-surface-tint: #ff7a5a;
 
-  /* ── Typography ── */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
   --text-headline-lg: 2rem;
@@ -78,13 +76,11 @@
   --text-data-mono--font-weight: 500;
 }
 
-/* ── Global base styles ── */
 body {
-  background-color: #f7f9fb;
-  color: #191c1e;
+  background-color: #000000;
+  color: #ffffff;
 }
 
-/* ── Material Symbols icon font ── */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
@@ -104,13 +100,27 @@ body {
   user-select: none;
 }
 
-/* ── Custom scrollbar ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f2f4f6; }
-::-webkit-scrollbar-thumb { background: #c4c5d5; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #757684; }
+::-webkit-scrollbar-track { background: #151515; }
+::-webkit-scrollbar-thumb { background: #555555; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #777777; }
 
-/* ── Input number: hide arrows ── */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
+
+/* Inputs info white */
+input, select, textarea {
+  color: #ffffff !important;
+}
+
+/* Select options black */
+select option {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* Table titles black */
+th, .table-header {
+  color: #000000;
+}

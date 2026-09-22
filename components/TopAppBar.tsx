@@ -14,9 +14,10 @@ export default function TopAppBar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 lg:px-8 h-16 bg-surface-container-lowest shadow-sm">
       <div className="flex items-center gap-3">
-        <span className="material-symbols-outlined text-primary">receipt_long</span>
+        
+        {/* <span className="material-symbols-outlined text-primary">receipt_long</span> */}
         <Link href="/" className="text-headline-md font-bold text-primary leading-none">
-          MN Orçamentos
+          <img src="/logo-white.png" alt="" style={{ width: '200px', height: '200px', objectFit: 'contain' }} />
         </Link>
       </div>
 

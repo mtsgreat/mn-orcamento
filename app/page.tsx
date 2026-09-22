@@ -96,13 +96,13 @@ export default function Dashboard() {
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-surface-container-low border-b border-outline-variant">
-                    <th className="p-4 text-label-md text-on-surface-variant w-20">Nº</th>
-                    <th className="p-4 text-label-md text-on-surface-variant">CLIENTE</th>
-                    <th className="p-4 text-label-md text-on-surface-variant w-36 text-right">TOTAL</th>
-                    <th className="p-4 text-label-md text-on-surface-variant w-28">STATUS</th>
-                    <th className="p-4 text-label-md text-on-surface-variant w-32">DATA</th>
-                    <th className="p-4 text-label-md text-on-surface-variant w-24"></th>
+                  <tr className="bg-[#e0e0e0] border-b border-outline-variant">
+                    <th className="p-4 text-label-md text-black w-20">Nº</th>
+                    <th className="p-4 text-label-md text-black">CLIENTE</th>
+                    <th className="p-4 text-label-md text-black w-36 text-right">TOTAL</th>
+                    <th className="p-4 text-label-md text-black w-28">STATUS</th>
+                    <th className="p-4 text-label-md text-black w-32">DATA</th>
+                    <th className="p-4 text-label-md text-black w-24"></th>
                   </tr>
                 </thead>
                 <tbody>

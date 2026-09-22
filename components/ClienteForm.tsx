@@ -9,7 +9,7 @@ interface Props {
 }
 
 const inputClass =
-  'w-full border border-outline-variant bg-white p-3 rounded-lg text-body-md text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all'
+  'w-full border border-outline-variant bg-black p-3 rounded-lg text-body-md text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[#F54927] focus:border-transparent focus:outline-none transition-all'
 
 const labelClass = 'block text-label-md text-on-surface-variant uppercase tracking-wider mb-1'
 

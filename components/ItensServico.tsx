@@ -56,11 +56,11 @@ export default function ItensServico({ itens, onChange }: Props) {
       <div className="mt-5 overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-surface-container-low border-y border-outline-variant">
-              <th className="p-3 text-label-md text-on-surface-variant w-20">QTD</th>
-              <th className="p-3 text-label-md text-on-surface-variant">DESCRIÇÃO</th>
-              <th className="p-3 text-label-md text-on-surface-variant w-36 text-right">VL. UNIT. (R$)</th>
-              <th className="p-3 text-label-md text-on-surface-variant w-32 text-right">SUBTOTAL</th>
+            <tr className="bg-[#e0e0e0] border-y border-outline-variant">
+              <th className="p-3 text-label-md text-black w-20">QTD</th>
+              <th className="p-3 text-label-md text-black">DESCRIÇÃO</th>
+              <th className="p-3 text-label-md text-black w-36 text-right">VL. UNIT. (R$)</th>
+              <th className="p-3 text-label-md text-black w-32 text-right">SUBTOTAL</th>
               <th className="p-3 w-10"></th>
             </tr>
           </thead>
@@ -88,7 +88,7 @@ export default function ItensServico({ itens, onChange }: Props) {
                         setRawQtd((p) => { const c = { ...p }; delete c[item.id]; return c })
                         updateRow(item.id, 'quantidade', n || 1)
                       }}
-                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md outline-none placeholder:text-outline"
+                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md text-white outline-none placeholder:text-gray-400"
                     />
                   </td>
 
@@ -99,7 +99,7 @@ export default function ItensServico({ itens, onChange }: Props) {
                       placeholder="Descrição do serviço ou produto"
                       value={item.descricao}
                       onChange={(e) => updateRow(item.id, 'descricao', e.target.value)}
-                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md outline-none placeholder:text-outline"
+                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md text-white outline-none placeholder:text-gray-400"
                     />
                   </td>
 
@@ -119,7 +119,7 @@ export default function ItensServico({ itens, onChange }: Props) {
                         setRawVal((p) => { const c = { ...p }; delete c[item.id]; return c })
                         updateRow(item.id, 'valorUnitario', n)
                       }}
-                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md text-right outline-none placeholder:text-outline"
+                      className="w-full bg-transparent border-none p-0 focus:ring-0 text-body-md text-right text-white outline-none placeholder:text-gray-400"
                     />
                   </td>
 
