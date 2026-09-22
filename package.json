@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "vercel --prod",
     "start": "next start"
   },
   "dependencies": {
