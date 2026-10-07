@@ -92,14 +92,34 @@ export default function OrcamentoDetalhes() {
   const handleSave = async () => {
     setSaving(true)
     try {
+      const supabase = createClient()
       const formaToSave = formaPagamento === '50% / Prazo'
         ? `50%/P/${diasPrazo} dias`
         : (formaPagamento === 'Cartão de Crédito com Juros' || formaPagamento === 'Cartão de Crédito sem Juros')
           ? `Cartão de crédito em ${parcelas} ${parcelas === 1 ? 'vez' : 'vezes'}, ${formaPagamento === 'Cartão de Crédito com Juros' ? 'com juros' : 'sem juros'}`
           : formaPagamento
-      await createClient().from('orcamentos')
+      
+      // Atualiza o orçamento
+      await supabase.from('orcamentos')
         .update({ prazo_entrega: prazoEntrega || null, forma_pagamento: formaToSave, frete, desconto, subtotal, total })
         .eq('id', id)
+      
+      // Remove todos os itens existentes do orçamento
+      await supabase.from('orcamento_itens').delete().eq('orcamento_id', id)
+      
+      // Insere os itens atualizados (apenas os que têm descrição)
+      const itensValidos = itens.filter((i) => i.descricao.trim())
+      if (itensValidos.length > 0) {
+        await supabase.from('orcamento_itens').insert(
+          itensValidos.map((i) => ({
+            orcamento_id: id,
+            descricao: i.descricao,
+            quantidade: i.quantidade,
+            valor_unitario: i.valorUnitario,
+            subtotal: i.quantidade * i.valorUnitario
+          }))
+        )
+      }
     } finally { setSaving(false) }
   }
 
